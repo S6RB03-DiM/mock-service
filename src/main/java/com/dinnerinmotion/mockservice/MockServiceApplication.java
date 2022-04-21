@@ -26,8 +26,6 @@ import org.springframework.retry.annotation.Backoff;
 public class MockServiceApplication {
 	private final Logger logger = LoggerFactory.getLogger(MockServiceApplication.class);
 
-	private final Logger logger = LoggerFactory.getLogger(MockServiceApplication.class);
-
 	public static void main(String[] args) {
 		SpringApplication.run(MockServiceApplication.class, args);
 	}
