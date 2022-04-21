@@ -13,7 +13,7 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.retry.annotation.Backoff;
 
 @SpringBootApplication
-//@EnableEurekaClient
+@EnableEurekaClient
 public class MockServiceApplication {
 	private final Logger logger = LoggerFactory.getLogger(MockServiceApplication.class);
 
