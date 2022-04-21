@@ -12,9 +12,19 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.retry.annotation.Backoff;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.kafka.annotation.DltHandler;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.retry.annotation.Backoff;
+
 @SpringBootApplication
-@EnableEurekaClient
+//@EnableEurekaClient
 public class MockServiceApplication {
+	private final Logger logger = LoggerFactory.getLogger(MockServiceApplication.class);
 
 	private final Logger logger = LoggerFactory.getLogger(MockServiceApplication.class);
 
