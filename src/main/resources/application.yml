@@ -1,6 +1,11 @@
 spring:
   application:
     name: mock-service
+  kafka:
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
 server:
   port: 8002
 eureka:
