@@ -17,15 +17,13 @@ import java.util.List;
 @SpringBootApplication
 @EnableEurekaClient
 public class MockServiceApplication {
-	private final String prefixKafka = "gaiey5ud-";
 	private final String groupKafka = "mockGroup";
-
 
 	public static void main(String[] args) {
 		SpringApplication.run(MockServiceApplication.class, args);
 	}
 
-	@KafkaListener(id = groupKafka, topics = prefixKafka + "mockTopic")
+	@KafkaListener(id = groupKafka, topics = "mockTopic")
 	public void processMessage(String message,
 							   @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List partitions,
 							   @Header(KafkaHeaders.RECEIVED_TOPIC) List topics,
