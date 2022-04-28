@@ -12,30 +12,25 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.retry.annotation.Backoff;
 
+import java.util.List;
+
 @SpringBootApplication
 @EnableEurekaClient
 public class MockServiceApplication {
-	private final Logger logger = LoggerFactory.getLogger(MockServiceApplication.class);
+	private final String prefixKafka = "gaiey5ud-";
+	private final String groupKafka = "mockGroup";
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(MockServiceApplication.class, args);
 	}
 
-	@RetryableTopic(attempts = "5", backoff = @Backoff(delay = 2_000, maxDelay = 10_000, multiplier = 2))
-	@KafkaListener(id = "mockGroup", topics = "mockTopic")
-	public void listen(String in, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
-					   @Header(KafkaHeaders.OFFSET) long offset) {
+	@KafkaListener(id = groupKafka, topics = prefixKafka + "mockTopic")
+	public void processMessage(String message,
+							   @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List partitions,
+							   @Header(KafkaHeaders.RECEIVED_TOPIC) List topics,
+							   @Header(KafkaHeaders.OFFSET) List offsets) {
 
-		this.logger.info("Received: {} from {} @ {}", in, topic, offset);
-		if (in.startsWith("fail")) {
-			throw new RuntimeException("failed");
-		}
-	}
-
-	@DltHandler
-	public void listenDlt(String in, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
-						  @Header(KafkaHeaders.OFFSET) long offset) {
-
-		this.logger.info("DLT Received: {} from {} @ {}", in, topic, offset);
+		System.out.printf("%s-%d[%d] \"%s\"\n", topics.get(0), partitions.get(0), offsets.get(0), message);
 	}
 }

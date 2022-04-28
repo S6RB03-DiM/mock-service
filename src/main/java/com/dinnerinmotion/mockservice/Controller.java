@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
     @Autowired
     private KafkaTemplate<Object, Object> template;
+    private final String prefixKafka = "gaiey5ud-";
 
-    @GetMapping(path = "/send/{what}")
-    public void sendFoo(@PathVariable String what) {
-        this.template.send("mockTopic", what);
+    @GetMapping(path = "/send/{msg}")
+    public void sendFoo(@PathVariable String msg) {
+        this.template.send(prefixKafka + "mockTopic", msg);
     }
 }
